@@ -24,7 +24,7 @@ class cfg(cfg_common, cfg_dataset_default, cfg_model_mambaad):
 		self.test_per_epoch = self.epoch_full // 20
 		self.batch_train = 16  # official 16
 		self.batch_test_per = 16
-		self.lr = 0.005 * self.batch_train / 16
+		self.lr = 0.001 * self.batch_train / 16
 		self.weight_decay = 0.0001
 		self.metrics = [
 			'mAUROC_sp_max', 'mAP_sp_max', 'mF1_max_sp_max',
@@ -61,7 +61,7 @@ class cfg(cfg_common, cfg_dataset_default, cfg_model_mambaad):
 		self.model_t.kwargs = dict(pretrained=False, checkpoint_path='model/pretrain/resnet34-43635321.pth',
 								   strict=False, features_only=True, out_indices=[1, 2, 3])
 		self.model_s = dict(
-			depths_decoder=[3, 4, 6, 3],
+			depths_decoder=[3, 9, 9, 7],
 			scan_type='hilbert',
 			num_direction=8,
 		)
@@ -96,7 +96,7 @@ class cfg(cfg_common, cfg_dataset_default, cfg_model_mambaad):
 
 		# ==> loss
 		self.loss.loss_terms = [
-			dict(type='L2Loss', name='pixel', lam=5.0),
+			dict(type='L2Loss', name='pixel', lam=1.0),
 		]
 
 		# ==> logging
